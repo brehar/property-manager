@@ -1,0 +1,8 @@
+<div class="row">
+    <div class="col-md-12 text-center">
+        <p>{{ property.address }}</p>
+        <p>{{ property.occupied }}</p>
+        <p>Rent: {{ property.rent | currency : '$' : 2 }}</p>
+        <p>Utilities: {{ property.utilities | currency : '$' : 2 }}</p>
+    </div>
+</div>

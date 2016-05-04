@@ -1,0 +1,82 @@
+<div class="row" ng-hide="tenantToAdd || tenantToEdit">
+    <div class="col-md-12 text-center">
+        <button class="btn btn-primary" ng-click="addTenant()">Add a Tenant</button>
+    </div>
+</div>
+
+<div class="row" ng-show="tenantToAdd">
+    <div class="col-md-12">
+        <form ng-submit="saveTenant()">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" ng-model="newTenant.name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail Address</label>
+                <input type="email" class="form-control" id="email" ng-model="newTenant.email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" ng-model="newTenant.phone" required>
+            </div>
+            <div class="text-center">
+                <button type="button" class="btn btn-warning" ng-click="cancelAdd()">Cancel</button>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row" ng-show="tenantToEdit">
+    <div class="col-md-12">
+        <form ng-submit="saveEdit()">
+            <div class="form-group">
+                <label for="edit-name">Name</label>
+                <input type="text" class="form-control" id="edit-name" ng-model="tenantToEdit.name" required>
+            </div>
+            <div class="form-group">
+                <label for="edit-email">E-mail Address</label>
+                <input type="email" class="form-control" id="edit-email" ng-model="tenantToEdit.email" required>
+            </div>
+            <div class="form-group">
+                <label for="edit-phone">Phone Number</label>
+                <input type="tel" class="form-control" id="edit-phone" ng-model="tenantToEdit.phone" required>
+            </div>
+            <div class="text-center">
+                <button type="button" class="btn btn-danger" ng-click="cancelEdit()">Discard Changes</button>
+                <button type="submit" class="btn btn-success">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br><br>
+
+<div class="form-group">
+    <input type="text" class="form-control" ng-model="searchFilter" placeholder="Search Tenants">
+</div>
+
+<br><br>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th ng-click="changeSorting('name')">Name <i class="glyphicon" ng-class="getIcon('name')"></i></th>
+                <th ng-click="changeSorting('email')">E-mail Address <i class="glyphicon" ng-class="getIcon('email')"></i></th>
+                <th ng-click="changeSorting('phone')">Phone Number <i class="glyphicon" ng-class="getIcon('phone')"></i></th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="tenant in tenants | filter:searchFilter | orderBy:sort.active:sort.descending">
+                <td><a ui-sref="tenantdetails({id: tenant._id})">{{ tenant.name }}</a></td>
+                <td>{{ tenant.email }}</td>
+                <td>{{ tenant.phone }}</td>
+                <td><button type="button" class="btn btn-default" ng-click="editTenant(tenant._id, tenant)"><span class="glyphicon glyphicon-edit"></span></button></td>
+                <td><button type="button" class="btn btn-default" ng-click="removeTenant(tenant._id, tenant)"><span class="glyphicon glyphicon-trash"></span></button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
