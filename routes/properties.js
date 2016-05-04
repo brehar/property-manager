@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-    Property.findById(req.params.id).populate('tenants').exec((err, property) => {
+    Property.findById(req.params.id).exec((err, property) => {
         res.status(err ? 400 : 200).send(err || property);
     });
 });
