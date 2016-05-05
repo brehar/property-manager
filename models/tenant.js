@@ -14,6 +14,10 @@ var tenantSchema = new mongoose.Schema({
     phone: {
         type: String,
         required: true
+    },
+    property: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Property'
     }
 });
 

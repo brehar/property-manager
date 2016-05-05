@@ -22,6 +22,10 @@ app.service('Properties', function($http) {
     this.updateProperty = (id, newProperty) => {
         return $http.put(`/api/properties/${id}`, newProperty);
     };
+    
+    this.addTenant = (id, newTenant) => {
+        return $http.put(`/api/properties/${id}/addTenant`, newTenant);
+    };
 });
 
 app.service('Tenants', function($http) {

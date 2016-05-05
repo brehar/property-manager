@@ -71,9 +71,9 @@
         </thead>
         <tbody>
             <tr ng-repeat="tenant in tenants | filter:searchFilter | orderBy:sort.active:sort.descending">
-                <td><a ui-sref="tenantdetails({id: tenant._id})">{{ tenant.name }}</a></td>
-                <td>{{ tenant.email }}</td>
-                <td>{{ tenant.phone }}</td>
+                <td ui-sref="tenantdetails({id: tenant._id})">{{ tenant.name }}</td>
+                <td ui-sref="tenantdetails({id: tenant._id})">{{ tenant.email }}</td>
+                <td ui-sref="tenantdetails({id: tenant._id})">{{ tenant.phone }}</td>
                 <td><button type="button" class="btn btn-default" ng-click="editTenant(tenant._id, tenant)"><span class="glyphicon glyphicon-edit"></span></button></td>
                 <td><button type="button" class="btn btn-default" ng-click="removeTenant(tenant._id, tenant)"><span class="glyphicon glyphicon-trash"></span></button></td>
             </tr>

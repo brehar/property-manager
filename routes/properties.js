@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-    Property.findById(req.params.id).exec((err, property) => {
+    Property.findById(req.params.id).populate('tenants').exec((err, property) => {
         res.status(err ? 400 : 200).send(err || property);
     });
 });
@@ -47,6 +47,19 @@ router.delete('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
     Property.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true}, (err, property) => {
         res.status(err ? 400 : 200).send(err || property);
+    });
+});
+
+router.put('/:property/addTenant', (req, res) => {
+    Property.findById(req.params.property, (err, property) => {
+        if (err) return res.status(400).send(err);
+
+        var newTenant = req.body.tenant;
+        property.tenants.push(newTenant);
+
+        property.save((err, savedProperty) => {
+            res.status(err ? 400 : 200).send(err || savedProperty);
+        });
     });
 });
 

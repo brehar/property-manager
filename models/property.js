@@ -9,7 +9,14 @@ var propertySchema = new mongoose.Schema({
     },
     occupied: {
         type: String,
-        required: true
+        required: true,
+        enum: ['Vacant', 'Occupied']
+    },
+    bedrooms: {
+        type: Number,
+        required: true,
+        min: 1,
+        max: 3
     },
     rent: {
         type: Number,
@@ -18,7 +25,13 @@ var propertySchema = new mongoose.Schema({
     utilities: {
         type: Number,
         required: true
-    }
+    },
+    tenants: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Tenant'
+        }
+    ]
 });
 
 var Property = mongoose.model('Property', propertySchema);

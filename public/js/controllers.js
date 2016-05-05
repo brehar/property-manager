@@ -87,6 +87,8 @@ app.controller('tenantdetailsCtrl', function($scope, $state, Tenants) {
 });
 
 app.controller('propCtrl', function($scope, Properties) {
+    $scope.bedrooms = [1, 2, 3];
+
     Properties.getProperties().then(res => {
         $scope.properties = res.data;
     });
@@ -160,8 +162,26 @@ app.controller('propCtrl', function($scope, Properties) {
     };
 });
 
-app.controller('propertydetailsCtrl', function($scope, $state, Properties) {
+app.controller('propertydetailsCtrl', function($scope, $state, Properties, Tenants) {
     Properties.getPropertyById($state.params.id).then(res => {
         $scope.property = res.data;
+        
+        return Tenants.getTenants();
+    }).then(res => {
+        $scope.tenants = res.data;
     });
+    
+    $scope.addTenant = function() {
+        $scope.tenantToAdd = true;
+    };
+
+    $scope.cancelAdd = function() {
+        $scope.tenantToAdd = false;
+    };
+    
+    $scope.saveTenant = function() {
+        Properties.addTenant($scope.property._id, $scope.newTenant).then(res => {
+            
+        });
+    };
 });

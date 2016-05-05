@@ -24,17 +24,23 @@
                 </label>
             </div>
             <div class="form-group">
+                <label for="bedrooms">Number of Bedrooms</label>
+                <select id="bedrooms" class="form-control" ng-model="newProperty.bedrooms" ng-options="bedroom as bedroom for bedroom in bedrooms" required>
+
+                </select>
+            </div>
+            <div class="form-group">
                 <label class="sr-only" for="rent">Rent Amount (in dollars)</label>
                 <div class="input-group">
                     <div class="input-group-addon">$</div>
-                    <input type="number" class="form-control" id="rent" placeholder="Rent Amount" ng-model="newProperty.rent" min="0" step="0.01">
+                    <input type="number" class="form-control" id="rent" placeholder="Rent Amount" ng-model="newProperty.rent" min="0" step="0.01" required>
                 </div>
             </div>
             <div class="form-group">
                 <label class="sr-only" for="utilities">Utilities Amount (in dollars)</label>
                 <div class="input-group">
                     <div class="input-group-addon">$</div>
-                    <input type="number" class="form-control" id="utilities" placeholder="Utilities Amount" ng-model="newProperty.utilities" min="0" step="0.01">
+                    <input type="number" class="form-control" id="utilities" placeholder="Utilities Amount" ng-model="newProperty.utilities" min="0" step="0.01" required>
                 </div>
             </div>
             <div class="text-center">
@@ -65,17 +71,23 @@
                 </label>
             </div>
             <div class="form-group">
+                <label for="edit-bedrooms">Number of Bedrooms</label>
+                <select id="edit-bedrooms" class="form-control" ng-model="propertyToEdit.bedrooms" ng-options="bedroom as bedroom for bedroom in bedrooms" required>
+
+                </select>
+            </div>
+            <div class="form-group">
                 <label class="sr-only" for="edit-rent">Rent Amount (in dollars)</label>
                 <div class="input-group">
                     <div class="input-group-addon">$</div>
-                    <input type="number" class="form-control" id="edit-rent" placeholder="Rent Amount" ng-model="propertyToEdit.rent" min="0" step="0.01">
+                    <input type="number" class="form-control" id="edit-rent" placeholder="Rent Amount" ng-model="propertyToEdit.rent" min="0" step="0.01" required>
                 </div>
             </div>
             <div class="form-group">
                 <label class="sr-only" for="edit-utilities">Utilities Amount (in dollars)</label>
                 <div class="input-group">
                     <div class="input-group-addon">$</div>
-                    <input type="number" class="form-control" id="edit-utilities" placeholder="Utilities Amount" ng-model="propertyToEdit.utilities" min="0" step="0.01">
+                    <input type="number" class="form-control" id="edit-utilities" placeholder="Utilities Amount" ng-model="propertyToEdit.utilities" min="0" step="0.01" required>
                 </div>
             </div>
             <div class="text-center">
@@ -100,6 +112,7 @@
         <tr>
             <th ng-click="changeSorting('address')">Address <i class="glyphicon" ng-class="getIcon('address')"></i></th>
             <th ng-click="changeSorting('occupied')">Occupancy Status <i class="glyphicon" ng-class="getIcon('occupied')"></i></th>
+            <th ng-click="changeSorting('bedrooms')">Number of Bedrooms <i class="glyphicon" ng-class="getIcon('bedrooms')"></i></th>
             <th ng-click="changeSorting('rent')">Rent Price <i class="glyphicon" ng-class="getIcon('rent')"></i></th>
             <th ng-click="changeSorting('utilities')">Utilities Cost <i class="glyphicon" ng-class="getIcon('utilities')"></i></th>
             <th>Edit</th>
@@ -108,10 +121,11 @@
         </thead>
         <tbody>
         <tr ng-repeat="property in properties | filter:searchFilter | orderBy:sort.active:sort.descending">
-            <td><a ui-sref="propertydetails({id: property._id})">{{ property.address }}</a></td>
-            <td>{{ property.occupied }}</td>
-            <td>{{ property.rent | currency : '$' : 2 }}</td>
-            <td>{{ property.utilities | currency : '$' : 2 }}</td>
+            <td ui-sref="propertydetails({id: property._id})">{{ property.address }}</td>
+            <td ui-sref="propertydetails({id: property._id})">{{ property.occupied }}</td>
+            <td ui-sref="propertydetails({id: property._id})">{{ property.bedrooms }}</td>
+            <td ui-sref="propertydetails({id: property._id})">{{ property.rent | currency : '$' : 2 }}</td>
+            <td ui-sref="propertydetails({id: property._id})">{{ property.utilities | currency : '$' : 2 }}</td>
             <td><button type="button" class="btn btn-default" ng-click="editProperty(property._id, property)"><span class="glyphicon glyphicon-edit"></span></button></td>
             <td><button type="button" class="btn btn-default" ng-click="removeProperty(property._id, property)"><span class="glyphicon glyphicon-trash"></span></button></td>
         </tr>

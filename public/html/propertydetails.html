@@ -2,7 +2,47 @@
     <div class="col-md-12 text-center">
         <p>{{ property.address }}</p>
         <p>{{ property.occupied }}</p>
+        <p>Number of Bedrooms: {{ property.bedrooms }}</p>
         <p>Rent: {{ property.rent | currency : '$' : 2 }}</p>
         <p>Utilities: {{ property.utilities | currency : '$' : 2 }}</p>
     </div>
+</div>
+
+<br><br>
+
+<div class="row" ng-hide="tenantToAdd">
+    <div class="col-md-12 text-center">
+        <button class="btn btn-primary" ng-click="addTenant()">Add a Tenant</button>
+    </div>
+</div>
+
+<div class="row" ng-show="tenantToAdd">
+    <form ng-submit="saveTenant()">
+        <div class="form-group">
+            <select class="form-control" ng-model="newTenant.tenant">
+                <option ng-repeat="tenant in tenants" value="{{ tenant._id }}">{{ tenant.name }}</option>
+            </select>
+        </div>
+        <div class="text-center">
+            <button type="button" class="btn btn-warning" ng-click="cancelAdd()">Cancel</button>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </form>
+</div>
+
+<br><br>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-center">Current Tenants</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="tenant in property.tenants" class="text-center">
+                <td>{{ tenant.name }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
