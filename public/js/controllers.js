@@ -165,6 +165,8 @@ app.controller('propCtrl', function($scope, Properties) {
 app.controller('propertydetailsCtrl', function($scope, $state, Properties, Tenants) {
     Properties.getPropertyById($state.params.id).then(res => {
         $scope.property = res.data;
+        $scope.limit = res.data.bedrooms;
+        $scope.currentOccupancy = res.data.tenants.length;
         
         return Tenants.getAvailable();
     }).then(res => {
@@ -184,6 +186,11 @@ app.controller('propertydetailsCtrl', function($scope, $state, Properties, Tenan
             $scope.property = res.data;
             $scope.newTenant = {};
             $scope.tenantToAdd = false;
+            $scope.currentOccupancy++;
+
+            return Tenants.getAvailable();
+        }).then(res => {
+            $scope.tenants = res.data;
         });
     };
 
@@ -191,6 +198,11 @@ app.controller('propertydetailsCtrl', function($scope, $state, Properties, Tenan
         Properties.removeTenant($scope.property._id, tenant._id).then(res => {
             var index = $scope.property.tenants.indexOf(tenant);
             $scope.property.tenants.splice(index, 1);
+            $scope.currentOccupancy--;
+
+            return Tenants.getAvailable();
+        }).then(res => {
+            $scope.tenants = res.data;
         });
     };
 });
