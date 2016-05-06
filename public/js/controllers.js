@@ -22,7 +22,7 @@ app.controller('homeCtrl', function($scope, Properties, Tenants) {
     });
 });
 
-app.controller('tenantCtrl', function($scope, Tenants) {
+app.controller('tenantCtrl', function($scope, Tenants, Properties) {
     Tenants.getTenants().then(res => {
         $scope.tenants = res.data;
     });
@@ -46,8 +46,10 @@ app.controller('tenantCtrl', function($scope, Tenants) {
     $scope.removeTenant = function(id, tenant) {
         var index = $scope.tenants.indexOf(tenant);
 
-        Tenants.removeTenant(id).then(res => {
-            $scope.tenants.splice(index, 1);
+        Properties.removeTenant(tenant.property, tenant._id).then(res => {
+            Tenants.removeTenant(id).then(res => {
+                $scope.tenants.splice(index, 1);
+            });
         });
     };
 
