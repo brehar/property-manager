@@ -26,6 +26,10 @@ app.service('Properties', function($http) {
     this.addTenant = (id, newTenant) => {
         return $http.put(`/api/properties/${id}/addTenant`, newTenant);
     };
+
+    this.removeTenant = (propertyId, tenantId) => {
+        return $http.delete(`/api/properties/${propertyId}/${tenantId}`);
+    };
 });
 
 app.service('Tenants', function($http) {
@@ -47,5 +51,9 @@ app.service('Tenants', function($http) {
     
     this.updateTenant = (id, newTenant) => {
         return $http.put(`/api/tenants/${id}`, newTenant);
+    };
+
+    this.getAvailable = () => {
+        return $http.get('/api/tenants/available');
     };
 });

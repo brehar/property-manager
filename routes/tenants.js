@@ -20,6 +20,12 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/available', (req, res) => {
+    Tenant.find({property: {$exists: false}}).exec((err, tenants) => {
+        res.status(err ? 400 : 200).send(err || tenants);
+    });
+});
+
 router.get('/:id', (req, res) => {
     Tenant.findById(req.params.id, (err, tenant) => {
         res.status(err ? 400 : 200).send(err || tenant);

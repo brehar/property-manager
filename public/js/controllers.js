@@ -166,7 +166,7 @@ app.controller('propertydetailsCtrl', function($scope, $state, Properties, Tenan
     Properties.getPropertyById($state.params.id).then(res => {
         $scope.property = res.data;
         
-        return Tenants.getTenants();
+        return Tenants.getAvailable();
     }).then(res => {
         $scope.tenants = res.data;
     });
@@ -181,7 +181,16 @@ app.controller('propertydetailsCtrl', function($scope, $state, Properties, Tenan
     
     $scope.saveTenant = function() {
         Properties.addTenant($scope.property._id, $scope.newTenant).then(res => {
-            
+            $scope.property = res.data;
+            $scope.newTenant = {};
+            $scope.tenantToAdd = false;
+        });
+    };
+
+    $scope.removeTenant = function(tenant) {
+        Properties.removeTenant($scope.property._id, tenant._id).then(res => {
+            var index = $scope.property.tenants.indexOf(tenant);
+            $scope.property.tenants.splice(index, 1);
         });
     };
 });

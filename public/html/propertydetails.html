@@ -36,12 +36,14 @@
     <table class="table">
         <thead>
             <tr>
-                <th class="text-center">Current Tenants</th>
+                <th>Current Tenant(s)</th>
+                <th>Remove Tenant</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="tenant in property.tenants" class="text-center">
-                <td>{{ tenant.name }}</td>
+            <tr ng-repeat="tenant in property.tenants">
+                <td ui-sref="tenantdetails({id: tenant._id})">{{ tenant.name }}</td>
+                <td><button class="btn btn-default" ng-click="removeTenant(tenant)"><i class="glyphicon glyphicon-remove"></i></button></td>
             </tr>
         </tbody>
     </table>
