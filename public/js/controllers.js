@@ -46,11 +46,17 @@ app.controller('tenantCtrl', function($scope, Tenants, Properties) {
     $scope.removeTenant = function(id, tenant) {
         var index = $scope.tenants.indexOf(tenant);
 
-        Properties.removeTenant(tenant.property, tenant._id).then(res => {
+        if (tenant.property) {
+            Properties.removeTenant(tenant.property, tenant._id).then(res => {
+                Tenants.removeTenant(id).then(res => {
+                    $scope.tenants.splice(index, 1);
+                });
+            });
+        } else {
             Tenants.removeTenant(id).then(res => {
                 $scope.tenants.splice(index, 1);
             });
-        });
+        }
     };
 
     var editingIndex;
