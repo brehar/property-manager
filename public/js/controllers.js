@@ -2,8 +2,24 @@
 
 var app = angular.module('propApp');
 
-app.controller('homeCtrl', function() {
+app.controller('homeCtrl', function($scope, Properties, Tenants) {
+    Properties.getProperties().then(res => {
+        $scope.totalProperties = res.data.length;
+    });
     
+    Tenants.getTenants().then(res => {
+        $scope.totalTenants = res.data.length;
+    });
+
+    Properties.getRentedProperties().then(res => {
+        $scope.rentedProperties = res.data.length;
+
+        $scope.totalIncome = 0;
+
+        for (var i = 0; i < res.data.length; i++) {
+            $scope.totalIncome += res.data[i].rent;
+        }
+    });
 });
 
 app.controller('tenantCtrl', function($scope, Tenants) {
@@ -86,7 +102,7 @@ app.controller('tenantdetailsCtrl', function($scope, $state, Tenants) {
     });
 });
 
-app.controller('propCtrl', function($scope, Properties) {
+app.controller('propCtrl', function($scope, Properties, Tenants) {
     $scope.bedrooms = [1, 2, 3];
 
     Properties.getProperties().then(res => {
@@ -111,7 +127,12 @@ app.controller('propCtrl', function($scope, Properties) {
 
     $scope.removeProperty = function(id, property) {
         var index = $scope.properties.indexOf(property);
-
+        var tenants = property.tenants;
+        
+        for (var i = 0; i < tenants.length; i++) {
+            Tenants.leaveProperty(tenants[i]);
+        }
+        
         Properties.removeProperty(id).then(res => {
             $scope.properties.splice(index, 1);
         });

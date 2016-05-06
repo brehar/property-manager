@@ -21,6 +21,12 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/rentedProperties', (req, res) => {
+    Property.find({}).where('occupied').equals('Occupied').exec((err, properties) => {
+        res.status(err ? 400 : 200).send(err || properties);
+    });
+});
+
 router.get('/:id', (req, res) => {
     Property.findById(req.params.id).populate('tenants').exec((err, property) => {
         res.status(err ? 400 : 200).send(err || property);

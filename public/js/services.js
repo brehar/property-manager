@@ -30,6 +30,10 @@ app.service('Properties', function($http) {
     this.removeTenant = (propertyId, tenantId) => {
         return $http.delete(`/api/properties/${propertyId}/${tenantId}`);
     };
+    
+    this.getRentedProperties = () => {
+        return $http.get('/api/properties/rentedProperties');
+    };
 });
 
 app.service('Tenants', function($http) {
@@ -55,5 +59,9 @@ app.service('Tenants', function($http) {
 
     this.getAvailable = () => {
         return $http.get('/api/tenants/available');
+    };
+    
+    this.leaveProperty = id => {
+        return $http.delete(`/api/tenants/${id}/leaveProperty`);
     };
 });

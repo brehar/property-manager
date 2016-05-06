@@ -27,7 +27,7 @@ router.get('/available', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-    Tenant.findById(req.params.id, (err, tenant) => {
+    Tenant.findById(req.params.id).populate('property').exec((err, tenant) => {
         res.status(err ? 400 : 200).send(err || tenant);
     });
 });
@@ -37,6 +37,12 @@ router.post('/', (req, res) => {
     
     tenant.save((err, savedTenant) => {
         res.status(err ? 400 : 200).send(err || savedTenant);
+    });
+});
+
+router.delete('/:id/leaveProperty', (req, res) => {
+    Tenant.findByIdAndUpdate(req.params.id, {$unset: {property: 1}}, (err, tenant) => {
+        res.status(err ? 400 : 200).send(err || tenant);
     });
 });
 

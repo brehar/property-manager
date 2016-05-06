@@ -5,3 +5,22 @@
         <p>{{ tenant.phone }}</p>
     </div>
 </div>
+
+<br><br>
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Current Property</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td ui-sref="propertydetails({id: tenant.property._id})">{{ tenant.property.address }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
